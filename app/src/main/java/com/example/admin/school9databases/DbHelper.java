@@ -16,26 +16,26 @@ public class DbHelper extends SQLiteOpenHelper {
 
     }
 
-    public DbHelper(Context context){
-        this(context,DB_NAME,null,VERSION_DB);
+    public DbHelper(Context context) {
+        this(context, DB_NAME, null, VERSION_DB);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
+        createEmptyTables(sqLiteDatabase);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-deleteTables(sqLiteDatabase);
-onCreate(sqLiteDatabase);
+        deleteTables(sqLiteDatabase);
+        onCreate(sqLiteDatabase);
     }
 
-    private void createEmptyTables(SQLiteDatabase database){
+    private void createEmptyTables(SQLiteDatabase database) {
         database.execSQL("create table NOTES(id integer primary key, note text)");
     }
 
-    private void deleteTables(SQLiteDatabase database){
-       database.execSQL("DROP TABLE IF EXISTS NOTES");
+    private void deleteTables(SQLiteDatabase database) {
+        database.execSQL("DROP TABLE IF EXISTS NOTES");
     }
 }
