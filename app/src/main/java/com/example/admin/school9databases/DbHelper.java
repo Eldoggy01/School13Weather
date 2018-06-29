@@ -32,7 +32,7 @@ onCreate(sqLiteDatabase);
     }
 
     private void createEmptyTables(SQLiteDatabase database){
-        database.execSQL("create table NOTES(id integer primary key, name text)");
+        database.execSQL("create table NOTES(id integer primary key, note text)");
     }
 
     private void deleteTables(SQLiteDatabase database){
