@@ -3,6 +3,7 @@ package com.example.admin.school9databases;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -16,26 +17,30 @@ public class DbHelper extends SQLiteOpenHelper {
 
     }
 
-    public DbHelper(Context context){
-        this(context,DB_NAME,null,VERSION_DB);
+    public DbHelper(Context context) {
+        this(context, DB_NAME, null, VERSION_DB);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
+        Log.d("GG","Зашли в onCreate");
+        createEmptyTables(sqLiteDatabase);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-deleteTables(sqLiteDatabase);
-onCreate(sqLiteDatabase);
+        Log.d("GG","onUpgrade вызвался");
+        deleteTables(sqLiteDatabase);
+        onCreate(sqLiteDatabase);
     }
 
-    private void createEmptyTables(SQLiteDatabase database){
+    private void createEmptyTables(SQLiteDatabase database) {
+        Log.d("GG","createEmptyTables вызвался");
         database.execSQL("create table NOTES(id integer primary key, name text)");
+        Log.d("GG","database.execSQL сделали");
     }
 
-    private void deleteTables(SQLiteDatabase database){
-       database.execSQL("DROP TABLE IF EXISTS NOTES");
+    private void deleteTables(SQLiteDatabase database) {
+        database.execSQL("DROP TABLE IF EXISTS NOTES");
     }
 }
