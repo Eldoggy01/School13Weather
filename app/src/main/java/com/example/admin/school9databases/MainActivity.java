@@ -17,7 +17,7 @@ TextView textView;
         mDBManager = new DBManager(this);
         mDBManager.addNote("HAHAHA");
         String s = mDBManager.getNote();
-        Log.d("GG","s = "+s);
+        Log.d("GG","s = " + s);
         textView.setText(s);
     }
 

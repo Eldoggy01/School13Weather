@@ -21,6 +21,7 @@ public class DBManager {
         try {
             Log.d("GG","Щас вызовем dbHelper.getWritableDatabase()");
             db = dbHelper.getWritableDatabase();
+            Log.d("GG","После вызова");
             ContentValues contentValues = getContentValue(note);
             db.beginTransaction();
             addNOTESInternal(db, contentValues);
@@ -41,6 +42,7 @@ public class DBManager {
         String note = null;
         SQLiteDatabase db = null;
         try {
+            Log.d("GG","Щас вызовем dbHelper.getReadableDatabase()");
             db = dbHelper.getReadableDatabase();
             db.beginTransaction();
             Cursor cursor = db.query("NOTES", null, null, null, null, null, null);
@@ -67,7 +69,7 @@ public class DBManager {
     }
 
     private void addNOTESInternal(SQLiteDatabase db, ContentValues contentValues) {
-        db.insert("NOTE", null, contentValues);
+        db.insert("NOTES", null, contentValues);
     }
 
     private String parseCursor(Cursor cursor) {
