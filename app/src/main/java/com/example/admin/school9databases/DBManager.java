@@ -8,20 +8,23 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DBManager {
     private DbHelper dbHelper;
 
     public DBManager(Context context) {
-        Log.d("GG","Зашли в конструктор DBManager");
+        Log.d("GG", "Зашли в конструктор DBManager");
         this.dbHelper = new DbHelper(context);
     }
 
     public void addNote(String note) {
         SQLiteDatabase db = null;
         try {
-            Log.d("GG","Щас вызовем dbHelper.getWritableDatabase()");
+            Log.d("GG", "Щас вызовем dbHelper.getWritableDatabase()");
             db = dbHelper.getWritableDatabase();
-            Log.d("GG","После вызова");
+            Log.d("GG", "После вызова");
             ContentValues contentValues = getContentValue(note);
             db.beginTransaction();
             addNOTESInternal(db, contentValues);
@@ -38,19 +41,20 @@ public class DBManager {
         }
     }
 
-    public String getNote() {
-        String note = null;
+    public List getNotes() {
+        ArrayList notes = null;
         SQLiteDatabase db = null;
         try {
-            Log.d("GG","Щас вызовем dbHelper.getReadableDatabase()");
+            Log.d("GG", "Щас вызовем dbHelper.getReadableDatabase()");
             db = dbHelper.getReadableDatabase();
             db.beginTransaction();
             Cursor cursor = db.query("NOTES", null, null, null, null, null, null);
-            note = parseCursor(cursor);
+            notes = parseCursor(cursor);
+            cursor.close();
             db.setTransactionSuccessful();
         } catch (SQLiteException e) {
 
-        }finally{
+        } finally {
             if (db != null) {
                 if (db.inTransaction()) {
                     db.endTransaction();
@@ -58,13 +62,13 @@ public class DBManager {
                 db.close();
             }
         }
-        return note;
+        return notes;
     }
 
 
     private ContentValues getContentValue(String notes) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put("NOTE", notes);
+        contentValues.put("note", notes);
         return contentValues;
     }
 
@@ -72,10 +76,11 @@ public class DBManager {
         db.insert("NOTES", null, contentValues);
     }
 
-    private String parseCursor(Cursor cursor) {
-        if (cursor.moveToFirst()) {
-            return cursor.getString(cursor.getColumnIndex("name"));
+    private ArrayList parseCursor(Cursor cursor) {
+        ArrayList notes = null;
+        while (cursor.moveToNext()) {
+            notes.add(cursor.getString(cursor.getColumnIndex("note")));
         }
-        return null;
+        return notes;
     }
 }
