@@ -8,13 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-    private List<String> dataSet = new ArrayList<>();
+    private List<String[]> dataSet = new ArrayList<>();
 
 
     public MyAdapter(List dataSet){
@@ -32,7 +33,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.labelNameView.setText(dataSet.get(position));
+        holder.labelView.setText(dataSet.get(position)[1]);
     }
 
     @Override
@@ -42,11 +43,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        private EditText labelNameView;
+        private TextView labelView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            labelNameView = itemView.findViewById(R.id.label_name);
+            labelView = itemView.findViewById(R.id.label);
         }
 
     }
