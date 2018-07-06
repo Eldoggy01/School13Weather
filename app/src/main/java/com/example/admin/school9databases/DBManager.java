@@ -15,16 +15,21 @@ public class DBManager {
     private DbHelper dbHelper;
 
     public DBManager(Context context) {
-        Log.d("GG", "Зашли в конструктор DBManager");
+        Log.d("KG", "Зашли в конструктор DBManager");
         this.dbHelper = new DbHelper(context);
+    }
+
+    public void upgradeDB(){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        dbHelper.onUpgrade( db, db.getVersion(), db.getVersion()+1);
     }
 
     public void addNote(String note) {
         SQLiteDatabase db = null;
         try {
-            Log.d("GG", "Щас вызовем dbHelper.getWritableDatabase()");
+            Log.d("KG", "Щас вызовем dbHelper.getWritableDatabase()");
             db = dbHelper.getWritableDatabase();
-            Log.d("GG", "После вызова");
+            Log.d("KG", "После вызова");
             ContentValues contentValues = getContentValue(note);
             db.beginTransaction();
             addNOTESInternal(db, contentValues);
@@ -45,7 +50,7 @@ public class DBManager {
         ArrayList notes = null;
         SQLiteDatabase db = null;
         try {
-            Log.d("GG", "Щас вызовем dbHelper.getReadableDatabase()");
+            Log.d("KG", "Щас вызовем dbHelper.getReadableDatabase()");
             db = dbHelper.getReadableDatabase();
             db.beginTransaction();
             Cursor cursor = db.query("NOTES", null, null, null, null, null, null);
@@ -77,7 +82,7 @@ public class DBManager {
     }
 
     private ArrayList parseCursor(Cursor cursor) {
-        ArrayList notes = null;
+        ArrayList notes = new ArrayList();
         while (cursor.moveToNext()) {
             notes.add(cursor.getString(cursor.getColumnIndex("note")));
         }

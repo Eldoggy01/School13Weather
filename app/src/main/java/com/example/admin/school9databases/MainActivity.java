@@ -21,18 +21,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-       init();
+        init();
     }
 
-    private void init(){
+    private void init() {
         mDBManager = new DBManager(this);
-//        mDBManager.addNote("HAHAHA");
-//        String s = mDBManager.getNote();
-//        Log.d("GG", "s = " + s);
-//        addButton.setText(s);
         mRecyclerView = findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
+        Log.d("KG", "Закончил init()");
     }
 
     private void initViews() {
@@ -48,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d("KG", "Зашли в onResume()");
         myAdapter = new MyAdapter(mDBManager.getNotes());
         mRecyclerView.setAdapter(myAdapter);
     }
