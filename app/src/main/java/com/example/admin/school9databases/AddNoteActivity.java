@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class AddNoteActivity extends AppCompatActivity {
     private Button buttonAdd;
@@ -32,12 +33,13 @@ public class AddNoteActivity extends AppCompatActivity {
                 Log.d("KG", "Зашли в onClick");
                 dbManager = new DBManager(AddNoteActivity.this);
                 dbManager.addNote(editText.getText().toString());
+                Toast.makeText(AddNoteActivity.this, "Добавлена заметка: " + editText.getText(), Toast.LENGTH_SHORT).show();
             }
         });
         editText = findViewById(R.id.noteToAddEditText);
     }
 
-    public static Intent newIntent(Context context){
+    public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, AddNoteActivity.class);
         return intent;
     }

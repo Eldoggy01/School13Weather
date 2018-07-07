@@ -34,7 +34,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.id = String.valueOf(position+1);
+        holder.id = String.valueOf(dataSet.get(position)[0]);
         holder.mLabelView.setText(dataSet.get(position)[1]);
     }
 

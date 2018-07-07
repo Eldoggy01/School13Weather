@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EditNoteActivity extends AppCompatActivity {
     private TextView mId;
@@ -37,6 +38,7 @@ public class EditNoteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(MainActivity.logTag, "Кликнули Save");
                 mDbManager.updateNoteInDB(mId.getText().toString(),mNote.getText().toString());
+                Toast.makeText(EditNoteActivity.this, "Заметка сохранена!", Toast.LENGTH_SHORT).show();
             }
         });
     }
