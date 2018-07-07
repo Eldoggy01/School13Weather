@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,6 @@ public class DBManager {
     private DbHelper dbHelper;
 
     public DBManager(Context context) {
-        Log.d("KG", "Зашли в конструктор DBManager");
         this.dbHelper = new DbHelper(context);
     }
 
@@ -28,9 +26,7 @@ public class DBManager {
     public void addNote(String note) {
         SQLiteDatabase db = null;
         try {
-            Log.d("KG", "Щас вызовем dbHelper.getWritableDatabase()");
             db = dbHelper.getWritableDatabase();
-            Log.d("KG", "После вызова");
             ContentValues contentValues = getContentValues(null, note);
             db.beginTransaction();
             addNOTESInternal(db, contentValues);
@@ -48,16 +44,13 @@ public class DBManager {
     }
 
 
-    public void updateById(String id, String note) {
-        Log.d("KG", "Зашли в updateById и пытаемся вставить id = "+id+"и note = "+note);
+    public void updateNoteInDB(String id, String note) {
+        Log.d(MainActivity.logTag, "Зашли в updateById и пытаемся вставить id = "+id + "и note = "+note);
         SQLiteDatabase database;
         ContentValues contentValues = getContentValues(id, note);
         database = dbHelper.getWritableDatabase();
         database.update("NOTES", contentValues,"id=?", new String[]{id});
         List<String[]> notes = getNotes();
-        for (String[] s : notes) {
-            Log.d("KG", "Выводим  массив: id = "+ s[0] + "note = "+s[1] );
-        }
         database.close();
     }
 
@@ -83,7 +76,6 @@ public class DBManager {
         List notes = null;
         SQLiteDatabase db = null;
         try {
-            Log.d("KG", "Щас вызовем dbHelper.getReadableDatabase()");
             db = dbHelper.getReadableDatabase();
             db.beginTransaction();
             Cursor cursor = db.query("NOTES", null, null, null, null, null, "id");

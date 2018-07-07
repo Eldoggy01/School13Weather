@@ -21,7 +21,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
 
     public MyAdapter(List dataSet) {
-        Log.d("KG", "Зашли в конструктор MyAdapter");
         this.dataSet = dataSet;
     }
 
@@ -41,14 +40,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public int getItemCount() {
-        Log.d("KG", "Зашли в getItemCount()");
         return dataSet.size();
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
+        private String id;   //id записи в базе данных
         private TextView mLabelView;
         private Button mEditButton;
-        private String id;
 
         public MyViewHolder(final View itemView) {
             super(itemView);

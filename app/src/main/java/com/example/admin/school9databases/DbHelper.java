@@ -23,21 +23,20 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        Log.d("KG", "Зашли в onCreate");
+        Log.d(MainActivity.logTag, "Зашли в onCreate");
         createEmptyTables(sqLiteDatabase);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        Log.d("KG", "onUpgrade вызвался");
+        Log.d(MainActivity.logTag, "onUpgrade вызвался");
         deleteTables(sqLiteDatabase);
         onCreate(sqLiteDatabase);
     }
 
     private void createEmptyTables(SQLiteDatabase database) {
-        Log.d("KG", "createEmptyTables вызвался");
+        Log.d(MainActivity.logTag, "createEmptyTables вызвался");
         database.execSQL("create table NOTES(id integer primary key, note text)");
-        Log.d("KG", "database.execSQL сделали");
     }
 
     private void deleteTables(SQLiteDatabase database) {

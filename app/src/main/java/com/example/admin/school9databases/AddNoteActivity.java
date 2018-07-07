@@ -31,7 +31,6 @@ public class AddNoteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d("KG", "Зашли в onClick");
                 dbManager = new DBManager(AddNoteActivity.this);
-                Log.d("KG", "вставляем editText.getText().toString() = " + editText.getText().toString());
                 dbManager.addNote(editText.getText().toString());
             }
         });

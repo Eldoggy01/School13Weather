@@ -8,9 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import java.sql.SQLOutput;
 
 public class MainActivity extends AppCompatActivity {
+    public static String logTag = "KG";
     private Button addButton;
     private DBManager mDBManager;
     private MyAdapter myAdapter;
@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
-        Log.d("KG", "Закончил init()");
     }
 
     private void initViews() {
@@ -47,8 +46,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("KG", "Зашли в onResume()");
-        System.out.println("Зашли в onResume()");
+        Log.d(MainActivity.logTag, "Зашли в onResume()");
         myAdapter = new MyAdapter(mDBManager.getNotes());
         mRecyclerView.setAdapter(myAdapter);
     }
