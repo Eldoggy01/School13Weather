@@ -49,10 +49,15 @@ public class DBManager {
 
 
     public void updateById(String id, String note) {
+        Log.d("KG", "Зашли в updateById и пытаемся вставить id = "+id+"и note = "+note);
         SQLiteDatabase database;
         ContentValues contentValues = getContentValues(id, note);
         database = dbHelper.getWritableDatabase();
         database.update("NOTES", contentValues,"id=?", new String[]{id});
+        List<String[]> notes = getNotes();
+        for (String[] s : notes) {
+            Log.d("KG", "Выводим  массив: id = "+ s[0] + "note = "+s[1] );
+        }
         database.close();
     }
 
@@ -63,7 +68,7 @@ public class DBManager {
 //        SQLiteDatabase database = null;
 //
 //            database = dbHelper.getReadableDatabase();
-//            cursor = database.rawQuery("SELECT * FROM Notif WHERE id=?", new String[]{id});
+//            cursor = database.rawQuery("SELECT * FROM NOTES WHERE id=?", new String[]{id});
 //            while (cursor.moveToNext()) {
 //                stringArray[0] = cursor.getString(cursor.getColumnIndex("id"));
 //                System.out.println(stringArray[0]);
@@ -104,7 +109,7 @@ public class DBManager {
         if (id != null) {
             contentValues.put("id", id);
         }
-        if (id != null) {
+        if (note != null) {
             contentValues.put("note", note);
         }
         return contentValues;
@@ -119,7 +124,8 @@ public class DBManager {
         while (cursor.moveToNext()) {
             String[] array = new String[2];
             array[0] = cursor.getString(cursor.getColumnIndex("id"));
-            array[1] = cursor.getString(cursor.getColumnIndex("name"));
+            array[1] = cursor.getString(cursor.getColumnIndex("note"));
+            notes.add(array);
         }
         return notes;
     }

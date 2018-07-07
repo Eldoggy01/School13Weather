@@ -1,12 +1,14 @@
 package com.example.admin.school9databases;
 
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -18,8 +20,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private List<String[]> dataSet = new ArrayList<>();
 
 
-    public MyAdapter(List dataSet){
-        Log.d("KG","Зашли в конструктор MyAdapter");
+    public MyAdapter(List dataSet) {
+        Log.d("KG", "Зашли в конструктор MyAdapter");
         this.dataSet = dataSet;
     }
 
@@ -33,21 +35,33 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.labelView.setText(dataSet.get(position)[1]);
+        holder.id = String.valueOf(position+1);
+        holder.mLabelView.setText(dataSet.get(position)[1]);
     }
 
     @Override
     public int getItemCount() {
-        Log.d("KG","Зашли в getItemCount()");
+        Log.d("KG", "Зашли в getItemCount()");
         return dataSet.size();
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView labelView;
+        private TextView mLabelView;
+        private Button mEditButton;
+        private String id;
 
-        public MyViewHolder(View itemView) {
+        public MyViewHolder(final View itemView) {
             super(itemView);
-            labelView = itemView.findViewById(R.id.label);
+            mLabelView = itemView.findViewById(R.id.label);
+            mEditButton = itemView.findViewById(R.id.editButton);
+            mEditButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //переходим на другой экран для просмотра и редактирования заметки
+                    itemView.getContext().startActivity(EditNoteActivity.newIntent(itemView.getContext(), id, mLabelView.getText().toString()));
+
+                }
+            });
         }
 
     }

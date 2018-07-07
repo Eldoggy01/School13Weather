@@ -1,6 +1,5 @@
 package com.example.admin.school9databases;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import java.sql.SQLOutput;
 
 public class MainActivity extends AppCompatActivity {
     private Button addButton;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         mDBManager = new DBManager(this);
+        mDBManager.upgradeDB();
         mRecyclerView = findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, AddNoteActivity.class));
+                startActivity(AddNoteActivity.newIntent(MainActivity.this));
             }
         });
     }
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.d("KG", "Зашли в onResume()");
+        System.out.println("Зашли в onResume()");
         myAdapter = new MyAdapter(mDBManager.getNotes());
         mRecyclerView.setAdapter(myAdapter);
     }
