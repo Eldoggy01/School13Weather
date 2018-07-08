@@ -13,11 +13,13 @@ import android.widget.Button;
 public class EditStyleActivity extends AppCompatActivity {
     private Button mDefaultBackgroundButton;
     private Button mRedBackgroundButton;
+    private DBManager mDbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_style);
+        mDbManager = new DBManager(EditStyleActivity.this);
         initViews();
 
     }
@@ -27,14 +29,15 @@ public class EditStyleActivity extends AppCompatActivity {
         mDefaultBackgroundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyAdapter.setStyle(Color.TRANSPARENT);
+                mDbManager.updateStyleInDB("1", String.valueOf(Color.TRANSPARENT));
+
             }
         });
         mRedBackgroundButton = findViewById(R.id.redColor);
         mRedBackgroundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyAdapter.setStyle(Color.RED);
+                mDbManager.updateStyleInDB("1", String.valueOf(Color.RED));
             }
         });
     }

@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        myAdapter = new MyAdapter(mDBManager.getNotes());
+        myAdapter = new MyAdapter(mDBManager.getNotes(),mDBManager.getStyle());
         mRecyclerView.setAdapter(myAdapter);
     }
 }

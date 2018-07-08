@@ -11,15 +11,17 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private List<String[]> mDataSet = new ArrayList<>();
-    private static int color = Color.TRANSPARENT;
+    private List<String> mStyleSet = new ArrayList<String>();
 
 
-    public MyAdapter(List dataSet) {
+    public MyAdapter(List dataSet,List mStyleSet) {
         this.mDataSet = dataSet;
+        this.mStyleSet = mStyleSet;
     }
 
     @NonNull
@@ -34,7 +36,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.id = String.valueOf(mDataSet.get(position)[0]);
         holder.labelView.setText(mDataSet.get(position)[1]);
-        holder.labelView.setBackgroundColor(color);
+        holder.labelView.setBackgroundColor(Integer.valueOf(mStyleSet.get(1)));
     }
 
     @Override
@@ -43,9 +45,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
 
-    public static void setStyle(int color) {
-        MyAdapter.color = color;
-    }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         private String id;   //id записи в базе данных

@@ -30,7 +30,7 @@ public class AddNoteActivity extends AppCompatActivity {
         mButtonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("KG", "Зашли в onClick");
+                Log.d(MainActivity.logTag, "Зашли в onClick");
                 mDbManager = new DBManager(AddNoteActivity.this);
                 mDbManager.addNote(mNote.getText().toString());
                 Toast.makeText(AddNoteActivity.this, "Добавлена заметка: " + mNote.getText(), Toast.LENGTH_SHORT).show();
