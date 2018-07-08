@@ -12,21 +12,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBManager {
-    private DbHelper dbHelper;
+    private DbHelper mDbHelper;
 
     public DBManager(Context context) {
-        this.dbHelper = new DbHelper(context);
+        this.mDbHelper = new DbHelper(context);
     }
 
     public void upgradeDB() {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        dbHelper.onUpgrade(db, db.getVersion(), db.getVersion() + 1);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        mDbHelper.onUpgrade(db, db.getVersion(), db.getVersion() + 1);
     }
 
     public void addNote(String note) {
         SQLiteDatabase db = null;
         try {
-            db = dbHelper.getWritableDatabase();
+            db = mDbHelper.getWritableDatabase();
             ContentValues contentValues = getContentValues(null, note);
             db.beginTransaction();
             addNOTESInternal(db, contentValues);
@@ -48,7 +48,7 @@ public class DBManager {
         Log.d(MainActivity.logTag, "Зашли в updateById и пытаемся вставить id = "+id + "и note = "+note);
         SQLiteDatabase database;
         ContentValues contentValues = getContentValues(id, note);
-        database = dbHelper.getWritableDatabase();
+        database = mDbHelper.getWritableDatabase();
         database.update("NOTES", contentValues,"id=?", new String[]{id});
         List<String[]> notes = getNotes();
         database.close();
@@ -76,7 +76,7 @@ public class DBManager {
         List notes = null;
         SQLiteDatabase db = null;
         try {
-            db = dbHelper.getReadableDatabase();
+            db = mDbHelper.getReadableDatabase();
             db.beginTransaction();
             Cursor cursor = db.query("NOTES", null, null, null, null, null, "id");
             notes = parseCursor(cursor);

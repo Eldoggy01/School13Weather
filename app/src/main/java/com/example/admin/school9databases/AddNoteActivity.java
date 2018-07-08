@@ -13,9 +13,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class AddNoteActivity extends AppCompatActivity {
-    private Button buttonAdd;
-    private EditText editText;
-    private DBManager dbManager;
+    private Button mButtonAdd;
+    private EditText mNote;
+    private DBManager mDbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,17 +26,17 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        buttonAdd = findViewById(R.id.buttonAdd);
-        buttonAdd.setOnClickListener(new View.OnClickListener() {
+        mButtonAdd = findViewById(R.id.buttonAdd);
+        mButtonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("KG", "Зашли в onClick");
-                dbManager = new DBManager(AddNoteActivity.this);
-                dbManager.addNote(editText.getText().toString());
-                Toast.makeText(AddNoteActivity.this, "Добавлена заметка: " + editText.getText(), Toast.LENGTH_SHORT).show();
+                mDbManager = new DBManager(AddNoteActivity.this);
+                mDbManager.addNote(mNote.getText().toString());
+                Toast.makeText(AddNoteActivity.this, "Добавлена заметка: " + mNote.getText(), Toast.LENGTH_SHORT).show();
             }
         });
-        editText = findViewById(R.id.noteToAddEditText);
+        mNote = findViewById(R.id.noteToAddEditText);
     }
 
     public static Intent newIntent(Context context) {

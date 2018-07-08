@@ -17,11 +17,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-    private List<String[]> dataSet = new ArrayList<>();
+    private List<String[]> mDataSet = new ArrayList<>();
 
 
     public MyAdapter(List dataSet) {
-        this.dataSet = dataSet;
+        this.mDataSet = dataSet;
     }
 
     @NonNull
@@ -34,29 +34,29 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.id = String.valueOf(dataSet.get(position)[0]);
-        holder.mLabelView.setText(dataSet.get(position)[1]);
+        holder.id = String.valueOf(mDataSet.get(position)[0]);
+        holder.labelView.setText(mDataSet.get(position)[1]);
     }
 
     @Override
     public int getItemCount() {
-        return dataSet.size();
+        return mDataSet.size();
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         private String id;   //id записи в базе данных
-        private TextView mLabelView;
-        private Button mEditButton;
+        private TextView labelView;
+        private Button editButton;
 
         public MyViewHolder(final View itemView) {
             super(itemView);
-            mLabelView = itemView.findViewById(R.id.label);
-            mEditButton = itemView.findViewById(R.id.editButton);
-            mEditButton.setOnClickListener(new View.OnClickListener() {
+            labelView = itemView.findViewById(R.id.label);
+            editButton = itemView.findViewById(R.id.editButton);
+            editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //переходим на другой экран для просмотра и редактирования заметки
-                    itemView.getContext().startActivity(EditNoteActivity.newIntent(itemView.getContext(), id, mLabelView.getText().toString()));
+                    itemView.getContext().startActivity(EditNoteActivity.newIntent(itemView.getContext(), id, labelView.getText().toString()));
 
                 }
             });

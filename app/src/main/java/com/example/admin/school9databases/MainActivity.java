@@ -11,11 +11,11 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
     public static String logTag = "KG";
-    private Button addButton;
+    private Button mAddButton;
     private DBManager mDBManager;
     private MyAdapter myAdapter;
     private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +27,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         mDBManager = new DBManager(this);
-        mDBManager.upgradeDB();
         mRecyclerView = findViewById(R.id.recycler_view);
-        layoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(layoutManager);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
     }
 
     private void initViews() {
-        addButton = findViewById(R.id.addButton);
-        addButton.setOnClickListener(new View.OnClickListener() {
+        mAddButton = findViewById(R.id.addButton);
+        mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(AddNoteActivity.newIntent(MainActivity.this));
@@ -46,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(MainActivity.logTag, "Зашли в onResume()");
         myAdapter = new MyAdapter(mDBManager.getNotes());
         mRecyclerView.setAdapter(myAdapter);
     }
