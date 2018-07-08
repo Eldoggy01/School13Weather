@@ -12,6 +12,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
     public static String logTag = "KG";
     private Button mAddButton;
+    private Button mEditStyleButton;
     private DBManager mDBManager;
     private MyAdapter myAdapter;
     private RecyclerView mRecyclerView;
@@ -38,6 +39,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(AddNoteActivity.newIntent(MainActivity.this));
+            }
+        });
+        mEditStyleButton = findViewById(R.id.editStyleButton);
+        mEditStyleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(EditStyleActivity.newIntent(MainActivity.this));
             }
         });
     }

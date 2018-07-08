@@ -1,23 +1,21 @@
 package com.example.admin.school9databases;
 
 
-import android.app.Activity;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private List<String[]> mDataSet = new ArrayList<>();
+    private static int color = Color.TRANSPARENT;
 
 
     public MyAdapter(List dataSet) {
@@ -36,11 +34,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.id = String.valueOf(mDataSet.get(position)[0]);
         holder.labelView.setText(mDataSet.get(position)[1]);
+        holder.labelView.setBackgroundColor(color);
     }
 
     @Override
     public int getItemCount() {
         return mDataSet.size();
+    }
+
+
+    public static void setStyle(int color) {
+        MyAdapter.color = color;
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -63,4 +67,5 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
 
     }
+
 }
