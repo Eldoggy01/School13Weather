@@ -6,18 +6,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DarkSkyApiMapper  {
+public class DarkSkyApiMapper {
     private DarkSkyRetrofitHelper helper;
+    private WeatherResponse weatherResponse;
 
     public DarkSkyApiMapper(DarkSkyRetrofitHelper helper) {
         this.helper = helper;
     }
 
-public void getAsync(String apiKey, String latitude, String longitude){
-        helper.getService().getDailyForecast(apiKey,latitude,longitude).enqueue(new Callback<WeatherResponse>() {
+
+    public void getAsync() {
+        helper.getService().getDailyForecast(DarkSkyRetrofitHelper.API_KEY, DarkSkyRetrofitHelper.LATITUDE, DarkSkyRetrofitHelper.LONGITUDE).enqueue(new Callback<WeatherResponse>() {
             @Override
             public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
-
+                weatherResponse = response.body();
             }
 
             @Override
@@ -25,5 +27,13 @@ public void getAsync(String apiKey, String latitude, String longitude){
 
             }
         });
-}
+    }
+
+    public WeatherResponse getWeatherResponse() {
+        return weatherResponse;
+    }
+
+    public void setWeatherResponse(WeatherResponse weatherResponse) {
+        this.weatherResponse = weatherResponse;
+    }
 }

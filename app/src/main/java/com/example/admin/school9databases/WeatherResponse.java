@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 
-public class WeatherResponse  {
-@SerializedName("daily")
-   private WeatherForWeek weatherForWeek;
+public class WeatherResponse {
+    @SerializedName("daily")
+    private WeatherForWeek weatherForWeek;
 
     public WeatherForWeek getWeatherForWeek() {
         return weatherForWeek;
@@ -18,8 +18,7 @@ public class WeatherResponse  {
     }
 
 
-
-    public class WeatherForWeek  {
+    public class WeatherForWeek {
         @SerializedName("data")
         private List<WeatherForDay> data;
 
@@ -30,5 +29,6 @@ public class WeatherResponse  {
         public void setData(List<WeatherForDay> data) {
             this.data = data;
         }
+
     }
 }
