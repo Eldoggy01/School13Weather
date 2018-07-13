@@ -1,6 +1,6 @@
-package com.example.admin.school9databases.Retrofit;
+package com.example.admin.school9databases.retrofit;
 
-import com.example.admin.school9databases.WeatherResponse;
+import com.example.admin.school9databases.model.WeatherResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;

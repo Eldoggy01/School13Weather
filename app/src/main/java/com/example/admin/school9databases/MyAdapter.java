@@ -16,12 +16,10 @@ import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private List<String[]> mDataSet = new ArrayList<>();
-    private List<String> mStyleSet = new ArrayList<String>();
 
 
-    public MyAdapter(List dataSet,List mStyleSet) {
+    public MyAdapter(List dataSet) {
         this.mDataSet = dataSet;
-        this.mStyleSet = mStyleSet;
     }
 
     @NonNull
@@ -34,9 +32,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.id = String.valueOf(mDataSet.get(position)[0]);
-        holder.labelView.setText(mDataSet.get(position)[1]);
-        holder.labelView.setBackgroundColor(Integer.valueOf(mStyleSet.get(1)));
+//        holder.id = String.valueOf(mDataSet.get(position)[0]);
+        holder.labelView.setText(mDataSet.get(position)[2]);
     }
 
     @Override

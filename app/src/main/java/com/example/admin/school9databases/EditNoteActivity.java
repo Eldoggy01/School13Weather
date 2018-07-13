@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.admin.school9databases.dbUtils.DBManager;
+
 public class EditNoteActivity extends AppCompatActivity {
     private TextView mId;
     private EditText mNote;
@@ -37,7 +39,7 @@ public class EditNoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(MainActivity.logTag, "Кликнули Save");
-                mDbManager.updateNoteInDB(mId.getText().toString(),mNote.getText().toString());
+//                mDbManager.updateNoteInDB(mId.getText().toString(),mNote.getText().toString());
                 Toast.makeText(EditNoteActivity.this, "Заметка сохранена!", Toast.LENGTH_SHORT).show();
             }
         });

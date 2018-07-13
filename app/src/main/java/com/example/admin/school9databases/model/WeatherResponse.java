@@ -1,4 +1,4 @@
-package com.example.admin.school9databases;
+package com.example.admin.school9databases.model;
 
 import com.google.gson.annotations.SerializedName;
 

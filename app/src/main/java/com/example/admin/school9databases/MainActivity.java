@@ -8,10 +8,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.admin.school9databases.dbUtils.DBManager;
+
 
 public class MainActivity extends AppCompatActivity {
     public static String logTag = "KG";
     private Button mAddButton;
+    private MyIntentService service;
     private Button mEditStyleButton;
     private DBManager mDBManager;
     private MyAdapter myAdapter;
@@ -23,29 +26,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-        init();
+        try {
+            init();
+        } catch (InterruptedException e) {
+
+        }
     }
 
-    private void init() {
+    private void init() throws InterruptedException {
         mDBManager = new DBManager(this);
         mRecyclerView = findViewById(R.id.recycler_view);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        startService(MyIntentService.getIntent(this));
+        Thread.sleep(3000);
     }
 
     private void initViews() {
         mAddButton = findViewById(R.id.addButton);
-        mAddButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(AddNoteActivity.newIntent(MainActivity.this));
-            }
-        });
         mEditStyleButton = findViewById(R.id.editStyleButton);
         mEditStyleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(EditStyleActivity.newIntent(MainActivity.this));
+                myAdapter = new MyAdapter(mDBManager.getWeatherForWeek());
+                mRecyclerView.setAdapter(myAdapter);
             }
         });
     }
@@ -53,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        myAdapter = new MyAdapter(mDBManager.getNotes(),mDBManager.getStyle());
+        Log.d("GGGG",mDBManager.getWeatherForWeek().get(0).toString());
+        myAdapter = new MyAdapter(mDBManager.getWeatherForWeek());
         mRecyclerView.setAdapter(myAdapter);
     }
 }

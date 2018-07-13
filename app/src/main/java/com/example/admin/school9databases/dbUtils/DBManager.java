@@ -1,4 +1,4 @@
-package com.example.admin.school9databases;
+package com.example.admin.school9databases.dbUtils;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +22,13 @@ public class DBManager {
         mDbHelper.onUpgrade(db, db.getVersion(), db.getVersion() + 1);
     }
 
-    public void addNote(String note) {
+    public void addWeatherForecast(String dayName, String time, String tempHight, String tempLow, String pressure) {
         SQLiteDatabase db = null;
         try {
             db = mDbHelper.getWritableDatabase();
-            ContentValues contentValues = getNoteContentValues(null, note);
+            ContentValues contentValues = getContentValues(dayName, time, tempHight, tempLow, pressure);
             db.beginTransaction();
-            addContentToDB(db,"NOTES", contentValues);
+            addContentToDB(db, "WEATHER", contentValues);
             db.setTransactionSuccessful();
         } catch (SQLException e) {
 
@@ -43,14 +42,34 @@ public class DBManager {
         }
     }
 
+//    public void addNote(String note) {
+//        SQLiteDatabase db = null;
+//        try {
+//            db = mDbHelper.getWritableDatabase();
+//            ContentValues contentValues = getNoteContentValues(null, note);
+//            db.beginTransaction();
+//            addContentToDB(db, "NOTES", contentValues);
+//            db.setTransactionSuccessful();
+//        } catch (SQLException e) {
+//
+//        } finally {
+//            if (db != null) {
+//                if (db.inTransaction()) {
+//                    db.endTransaction();
+//                }
+//                db.close();
+//            }
+//        }
+//    }
 
-    public void updateNoteInDB(String id, String note) {
-        SQLiteDatabase database;
-        ContentValues contentValues = getNoteContentValues(id, note);
-        database = mDbHelper.getWritableDatabase();
-        database.update("NOTES", contentValues, "id=?", new String[]{id});
-        database.close();
-    }
+
+//    public void updateNoteInDB(String id, String note) {
+//        SQLiteDatabase database;
+//        ContentValues contentValues = getNoteContentValues(id, note);
+//        database = mDbHelper.getWritableDatabase();
+//        database.update("NOTES", contentValues, "id=?", new String[]{id});
+//        database.close();
+//    }
 
     public void updateStyleInDB(String id, String color) {
         SQLiteDatabase database;
@@ -61,13 +80,13 @@ public class DBManager {
     }
 
 
-    public List<String[]> getNotes() {
+    public List<String[]> getWeatherForWeek() {
         List notes = null;
         SQLiteDatabase db = null;
         try {
             db = mDbHelper.getReadableDatabase();
             db.beginTransaction();
-            Cursor cursor = db.query("NOTES", null, null, null, null, null, "id");
+            Cursor cursor = db.query("WEATHER", null, null, null, null, null, "id");
             notes = parseNotesCursor(cursor);
             cursor.close();
             db.setTransactionSuccessful();
@@ -108,16 +127,16 @@ public class DBManager {
     }
 
 
-    private ContentValues getNoteContentValues(String id, String note) {
+    private ContentValues getContentValues(String dayName, String time, String tempHight, String tempLow, String pressure) {
         ContentValues contentValues = new ContentValues();
-        if (id != null) {
-            contentValues.put("id", id);
-        }
-        if (note != null) {
-            contentValues.put("note", note);
-        }
+        contentValues.put("dayName", dayName);
+        contentValues.put("time", time);
+        contentValues.put("temperatureHight", tempHight);
+        contentValues.put("temperatureLow", tempLow);
+        contentValues.put("pressure", pressure);
         return contentValues;
     }
+
 
     private ContentValues getStyleContentValues(String id, String color) {
         ContentValues contentValues = new ContentValues();
@@ -132,24 +151,25 @@ public class DBManager {
 
 
     private void addContentToDB(SQLiteDatabase db, String table, ContentValues contentValues) {
-        if (table.toUpperCase().equals("NOTES")) {
-            db.insert("NOTES", null, contentValues);
-        }
-        if (table.toUpperCase().equals("STYLES")) {
-            db.insert("STYLES", null, contentValues);
+        if (table.toUpperCase().equals("WEATHER")) {
+            db.insert("WEATHER", null, contentValues);
         }
     }
 
 
     private List parseNotesCursor(Cursor cursor) {
-        List<String[]> notes = new ArrayList();
+        List<String[]> weatherParams = new ArrayList();
         while (cursor.moveToNext()) {
-            String[] array = new String[2];
-            array[0] = cursor.getString(cursor.getColumnIndex("id"));
-            array[1] = cursor.getString(cursor.getColumnIndex("note"));
-            notes.add(array);
+            String[] array = new String[6];
+            array[1] = cursor.getString(cursor.getColumnIndex("id"));
+            array[2] = cursor.getString(cursor.getColumnIndex("dayName"));
+            array[3] = cursor.getString(cursor.getColumnIndex("time"));
+            array[4] = cursor.getString(cursor.getColumnIndex("temperatureHight"));
+            array[5] = cursor.getString(cursor.getColumnIndex("temperatureLow"));
+            array[6] = cursor.getString(cursor.getColumnIndex("pressure"));
+            weatherParams.add(array);
         }
-        return notes;
+        return weatherParams;
     }
 
     private List parseStyleCursor(Cursor cursor) {

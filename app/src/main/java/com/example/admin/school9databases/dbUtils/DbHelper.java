@@ -1,11 +1,11 @@
-package com.example.admin.school9databases;
+package com.example.admin.school9databases.dbUtils;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.util.ArrayList;
+import com.example.admin.school9databases.MainActivity;
 
 public class DbHelper extends SQLiteOpenHelper {
     private static final int VERSION_DB = 1;
@@ -36,13 +36,10 @@ public class DbHelper extends SQLiteOpenHelper {
 
     private void createTables(SQLiteDatabase database) {
         Log.d(MainActivity.logTag, "createEmptyTables вызвался");
-        database.execSQL("create table NOTES(id integer primary key, note text)");
-        database.execSQL("create table STYLES(id integer primary key, color integer)");
-        database.execSQL("insert into STYLES(id, color) values(1,0)");
+        database.execSQL("create table WEATHER(id integer primary key, dayName text, time text, temperatureHight text, temperatureLow text, pressure text)");
     }
 
     private void deleteTables(SQLiteDatabase database) {
-        database.execSQL("DROP TABLE IF EXISTS NOTES");
-        database.execSQL("DROP TABLE IF EXISTS STYLES");
+        database.execSQL("DROP TABLE IF EXISTS WEATHER");
     }
 }

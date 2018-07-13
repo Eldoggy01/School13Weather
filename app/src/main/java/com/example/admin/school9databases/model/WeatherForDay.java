@@ -1,4 +1,4 @@
-package com.example.admin.school9databases;
+package com.example.admin.school9databases.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -7,21 +7,15 @@ public class WeatherForDay  {
     @SerializedName("time")
     @Expose
     private Integer time;
-    @SerializedName("icon")
-    @Expose
-    private String icon;
+//    @SerializedName("icon")
+//    @Expose
+//    private String icon;
     @SerializedName("temperatureHigh")
     @Expose
     private Double temperatureHigh;
-    @SerializedName("temperatureHighTime")
-    @Expose
-    private Integer temperatureHighTime;
     @SerializedName("temperatureLow")
     @Expose
     private Double temperatureLow;
-    @SerializedName("temperatureLowTime")
-    @Expose
-    private Integer temperatureLowTime;
     @SerializedName("pressure")
     @Expose
     private Double pressure;
@@ -36,13 +30,13 @@ public class WeatherForDay  {
     }
 
 
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
+//    public String getIcon() {
+//        return icon;
+//    }
+//
+//    public void setIcon(String icon) {
+//        this.icon = icon;
+//    }
 
 
     public Double getTemperatureHigh() {
@@ -53,24 +47,12 @@ public class WeatherForDay  {
         this.temperatureHigh = temperatureHigh;
     }
 
-    public Integer getTemperatureHighTime() {
-        return temperatureHighTime;
-    }
-
-    public void setTemperatureHighTime(Integer temperatureHighTime) {
-        this.temperatureHighTime = temperatureHighTime;
-    }
-
     public Double getTemperatureLow() {
         return temperatureLow;
     }
 
     public void setTemperatureLow(Double temperatureLow) {
         this.temperatureLow = temperatureLow;
-    }
-
-    public Integer getTemperatureLowTime() {
-        return temperatureLowTime;
     }
 
 
