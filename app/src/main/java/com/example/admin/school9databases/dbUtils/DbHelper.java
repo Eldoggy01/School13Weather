@@ -37,6 +37,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private void createTables(SQLiteDatabase database) {
         Log.d(MainActivity.logTag, "createEmptyTables вызвался");
         database.execSQL("create table WEATHER(id integer primary key, dayName text, time text, temperatureHight text, temperatureLow text, pressure text)");
+        database.execSQL("insert into WEATHER(dayName, time,temperatureHight, temperatureLow, pressure) values('NoInfo','NoInfo','NoInfo','NoInfo','NoInfo')");
     }
 
     private void deleteTables(SQLiteDatabase database) {

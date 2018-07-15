@@ -1,9 +1,12 @@
 package com.example.admin.school9databases.retrofit;
 
+import android.util.Log;
+
+import com.example.admin.school9databases.MainActivity;
 import com.example.admin.school9databases.model.WeatherResponse;
 
-import retrofit2.Call;
-import retrofit2.Callback;
+import java.io.IOException;
+
 import retrofit2.Response;
 
 public class DarkSkyApiMapper {
@@ -14,20 +17,12 @@ public class DarkSkyApiMapper {
         this.helper = helper;
     }
 
-
-    public void getAsync() {
-        helper.getService().getDailyForecast(DarkSkyRetrofitHelper.API_KEY, DarkSkyRetrofitHelper.LATITUDE, DarkSkyRetrofitHelper.LONGITUDE).enqueue(new Callback<WeatherResponse>() {
-            @Override
-            public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
-                weatherResponse = response.body();
-            }
-
-            @Override
-            public void onFailure(Call<WeatherResponse> call, Throwable t) {
-
-            }
-        });
+    public void getWeatherSync() throws IOException {
+        Log.d(MainActivity.logTag, "Зашли в getWeatherSync()");
+        Response<WeatherResponse> response =   helper.getService().getDailyForecast(DarkSkyRetrofitHelper.API_KEY, DarkSkyRetrofitHelper.LATITUDE, DarkSkyRetrofitHelper.LONGITUDE).execute();
+        weatherResponse = response.body();
     }
+
 
     public WeatherResponse getWeatherResponse() {
         return weatherResponse;

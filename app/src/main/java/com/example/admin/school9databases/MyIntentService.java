@@ -11,6 +11,7 @@ import com.example.admin.school9databases.dbUtils.DBManager;
 import com.example.admin.school9databases.retrofit.DarkSkyApiMapper;
 import com.example.admin.school9databases.retrofit.DarkSkyRetrofitHelper;
 
+import java.io.IOException;
 import java.util.List;
 
 public class MyIntentService extends IntentService {
@@ -18,25 +19,36 @@ public class MyIntentService extends IntentService {
     private DarkSkyApiMapper apiMapper;
     private DBManager dbManager;
 
-    public MyIntentService(String name) {
-        super(name);
+    public MyIntentService() {
+        super("MyIntentService");
+
     }
+
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
+        Log.d("GG", "Зашли в onHandleIntent");
         retrofitHelper = new DarkSkyRetrofitHelper();
         apiMapper = new DarkSkyApiMapper(retrofitHelper);
-        apiMapper.getAsync();
-        List<WeatherForDay> weatherForDayList = apiMapper.getWeatherResponse().getWeatherForWeek().getData();
-        dbManager = new DBManager(this);
-        CalendarHelper calendarHelper = new CalendarHelper();
-        String[] daysOfWeek = calendarHelper.getNext7DaysOfWeek();
-        for (int i = 0; i < daysOfWeek.length && i < weatherForDayList.size(); i++) {
-            WeatherForDay weatherForDay = weatherForDayList.get(i);
-            dbManager.addWeatherForecast(daysOfWeek[i], weatherForDay.getTime().toString(), weatherForDay.getTemperatureHigh().toString(), weatherForDay.getTemperatureLow().toString(), weatherForDay.getPressure().toString());
-            Log.d("GGGG",dbManager.getWeatherForWeek().get(0).toString());
+        try {
+            apiMapper.getWeatherSync();
+            List<WeatherForDay> weatherForDayList = apiMapper.getWeatherResponse().getWeatherForWeek().getData();
+            dbManager = new DBManager(this);
+            CalendarHelper calendarHelper = new CalendarHelper();
+            String[] daysOfWeek = calendarHelper.getNext7DaysOfWeek();
+            for (int i = 0; i < daysOfWeek.length && i < weatherForDayList.size(); i++) {
+                WeatherForDay weatherForDay = weatherForDayList.get(i);
+                dbManager.addWeatherForecast(String.valueOf(i + 1), daysOfWeek[i], weatherForDay.getTime().toString(), weatherForDay.getTemperatureHigh().toString(), weatherForDay.getTemperatureLow().toString(), weatherForDay.getPressure().toString());
+            }
+            Intent broadcastIntent = new Intent(MainActivity.INTENT_FILTER);
+            broadcastIntent.putExtra("data", "success");
+            sendBroadcast(broadcastIntent);
+        } catch (IOException e) {
+            Intent broadcastIntent = new Intent(MainActivity.INTENT_FILTER);
+            broadcastIntent.putExtra("data", "failure");
+            sendBroadcast(broadcastIntent);
+            e.printStackTrace();
         }
-
     }
 
     public static Intent getIntent(Context context) {
